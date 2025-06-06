@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tokenizer-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tokenizer-api
+  template:
+    metadata:
+      labels:
+        app: tokenizer-api
+    spec:
+      containers:
+        - name: tokenizer-api
+          image: tokenizer-api
+          ports:
+            - containerPort: 3000
+          env:
+            - name: REDIS_HOST
+              value: redis
+            - name: REDIS_PORT
+              value: "6379"
+            - name: API_KEY
+              value: pk_test_Tsef2b3c4d5e6
+            - name: NODE_ENV
+              value: production
+            - name: PORT
+              value: "3000"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tokenizer-service
+spec:
+  selector:
+    app: tokenizer-api
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
+  type: NodePort
