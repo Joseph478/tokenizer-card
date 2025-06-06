@@ -3,7 +3,7 @@ import { AppModule } from './AppModule';
 import { ValidationPipe } from '@nestjs/common';
 import { CustomExceptionFilter } from 'src/application/exceptions/ExceptionFilter';
 
-async function bootstrap() {
+export async function createApp() {
     const app = await NestFactory.create(AppModule);
     app.useGlobalPipes(
         new ValidationPipe({
@@ -14,6 +14,20 @@ async function bootstrap() {
         }),
     );
     app.useGlobalFilters(new CustomExceptionFilter());
+    return app;
+}
+
+async function bootstrap() {
+    const app = await createApp();
     await app.listen(process.env.PORT || 3000);
 }
-bootstrap();
+
+export async function handler() {
+    const app = await createApp();
+    await app.init();
+    return app;
+}
+
+if (process.env.NODE_ENV !== 'test') {
+    bootstrap();
+}
