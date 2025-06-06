@@ -21,6 +21,9 @@ export function IsLuhnValid(validationOptions?: ValidationOptions) {
 }
 
 function luhnCheck(cardNumber: string): boolean {
+    if(!cardNumber) {
+        return false;
+    }
     let sum = 0;
     let doubleDigit = false;
     for (let i = cardNumber.length - 1; i >= 0; i--) {

@@ -22,7 +22,7 @@ Una API en NestJS que genera y almacena tokens temporales para transacciones, co
 - (Opcional) Minikube + kubectl para simular un entorno EKS
 
 ---
-
+```
 ## 📁 Estructura
 ├── src/
 ├── Dockerfile
@@ -31,7 +31,7 @@ Una API en NestJS que genera y almacena tokens temporales para transacciones, co
 └── k8s/
 ├── redis-deployment.yaml
 └── tokenizer-deployment.yaml
-
+```
 
 ---
 
@@ -53,31 +53,43 @@ docker-compose up --build
 http://localhost:3000
 
 ### Las urls disponibles serán
-    http://localhost:3000/data-card/register (POST)
-    http://localhost:3000/data-card/get-data (GET)
-    
+    http://localhost:3000/data-card/register (POST) - El input solicitado esta validado.
+    http://localhost:3000/data-card/get-data (GET) - El token generado debe enviarse como bearer token
 
 # 2 Simular despliegue en EKS en Kubernetes con Minikube
 ## 1 Iniciar Minikube 
+```
 minikube start
+```
 
+## 2 Configurar para usar Docker de Minikube
+```
 eval $(minikube docker-env)
+```
 
-## 2 Construir la imagen para minikube
+## 3 Construir la imagen para minikube
+```
 docker build -t tokenizer-api .
+```
 
-## 3 Aplicar los manifiestos
+## 4 Aplicar los manifiestos
+```
 kubectl apply -f k8s/redis-deployment.yaml
 kubectl apply -f k8s/tokenizer-deployment.yaml
-
-## 4 Acceder a la API
+```
+## 5 Acceder a la API
+```
 minikube service tokenizer-service
+```
 
 ## Esto abrirá la URL en tu navegador. Si no lo hace, ejecuta:
-
+```
 minikube service tokenizer-service --url
+```
 
 ## Puedes verificar los pods y servicios con:
+```
 kubectl get pods
 kubectl get svc
 kubectl logs deployment/tokenizer-api
+```

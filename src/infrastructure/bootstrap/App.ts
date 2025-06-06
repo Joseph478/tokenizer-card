@@ -10,6 +10,7 @@ async function bootstrap() {
             whitelist: true,
             forbidNonWhitelisted: true,
             transform: true,
+            skipMissingProperties: false,
         }),
     );
     app.useGlobalFilters(new CustomExceptionFilter());

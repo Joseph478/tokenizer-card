@@ -1,40 +1,29 @@
 import { Controller, Post, Body, Headers, BadRequestException, Logger, Get, UseFilters } from '@nestjs/common';
 import { TokenizerApplicationService } from '../../application/service/TokenizerService';
-import { RequestTokenizerDto } from 'src/application/dto/request/RequestDto';
-import { ConfigService } from '@nestjs/config';
 import { CustomExceptionFilter } from 'src/application/exceptions/ExceptionFilter';
-
+import { ValidateApiKey } from '../../application/validation/ApiKeyValidation'
+import { PayloadDto } from 'src/application/dto/request/TokenizerPayload';
 
 @Controller('data-card')
 export class TokenizerController {
     constructor(
         private readonly tokenizerApplicationService: TokenizerApplicationService,
-        private configService: ConfigService
     ) { }
 
     @UseFilters(new CustomExceptionFilter())
     @Post('register')
-    async RegisterTokenDataCard(@Body() request: RequestTokenizerDto, @Headers('pk') pk: string): Promise<object> {
+    @ValidateApiKey()
+
+    async RegisterTokenDataCard(@Body() request: PayloadDto): Promise<object> {
         Logger.log(`TokenizerController | RegisterTokenDataCard | request: ${JSON.stringify(request)}`);
-        if (!pk) {
-            throw new BadRequestException('Header "pk" es requerido');
-        }
-        if (pk.toString() !== this.configService.get<string>('API_KEY')) {
-            throw new BadRequestException('La clave pk es inválida');
-        }
-        const { payload } = request;
-        return this.tokenizerApplicationService.registerDataCard(payload);
+        return this.tokenizerApplicationService.registerDataCard(request);
     }
     @UseFilters(new CustomExceptionFilter())
     @Get('get-data')
-    async GetTokenDataCard(@Headers('authorization') authHeader: string, @Headers('pk') pk: string): Promise<object> {
+    @ValidateApiKey()
+
+    async GetTokenDataCard(@Headers('authorization') authHeader: string): Promise<object> {
         Logger.log(`TokenizerController | GetTokenDataCard | authorization: ${authHeader}`);
-        if (!pk) {
-            throw new BadRequestException('Header "pk" es requerido');
-        }
-        if (pk.toString() !== this.configService.get<string>('API_KEY')) {
-            throw new BadRequestException('La clave pk es inválida');
-        }
         const token = authHeader?.replace('Bearer ', '');
         return this.tokenizerApplicationService.getDataCard(token);
     }
