@@ -13,15 +13,14 @@ export class TokenizerController {
     @UseFilters(new CustomExceptionFilter())
     @Post('register')
     @ValidateApiKey()
-
     async RegisterTokenDataCard(@Body() request: PayloadDto): Promise<object> {
         Logger.log(`TokenizerController | RegisterTokenDataCard | request: ${JSON.stringify(request)}`);
         return this.tokenizerApplicationService.registerDataCard(request);
     }
+
     @UseFilters(new CustomExceptionFilter())
     @Get('get-data')
     @ValidateApiKey()
-
     async GetTokenDataCard(@Headers('authorization') authHeader: string): Promise<object> {
         Logger.log(`TokenizerController | GetTokenDataCard | authorization: ${authHeader}`);
         const token = authHeader?.replace('Bearer ', '');

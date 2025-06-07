@@ -26,4 +26,4 @@ USER nodeuser
 
 ENV NODE_ENV=production
 
-CMD ["node", "dist/infrastructure/bootstrap/App.js"]
+CMD ["node", "dist/src/infrastructure/bootstrap/App.js"]

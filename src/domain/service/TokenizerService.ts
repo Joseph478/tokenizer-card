@@ -21,11 +21,12 @@ export class TokenizerDomainService {
     }
 
     async getDataCard( token: string): Promise<object> {
-        Logger.log(`TokenizerDomainService | registerDataCard | token: ${token}`);
+        Logger.log(`TokenizerDomainService | getDataCard | token: ${token}`);
         
         const response = await this.redisRepository.getTokenData(token);
+        Logger.log(`TokenizerDomainService | getDataCard | response: ${JSON.stringify(response)}`);
         const dataCard = new DataCard(response);
-        Logger.log(`TokenizerDomainService | registerDataCard | response: ${JSON.stringify(response)}`);
+        Logger.log(`TokenizerDomainService | getDataCard | dataCard: ${JSON.stringify(response)}`);
         return dataCard.toData();
     }
 }

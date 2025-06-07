@@ -3,7 +3,7 @@ import { ConfigService } from '@nestjs/config';
 import { Request } from 'express';
 
 @Injectable()
-class ApiKeyGuard implements CanActivate {
+export class ApiKeyGuard implements CanActivate {
     constructor(private configService: ConfigService) { }
 
     canActivate(context: ExecutionContext): boolean {
