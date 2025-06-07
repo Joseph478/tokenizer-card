@@ -9,3 +9,4 @@ Feature: API /data-card/register
     Examples:
         | peticion      | mensaje                          |
         | requestOk     | responseOk                       |
+

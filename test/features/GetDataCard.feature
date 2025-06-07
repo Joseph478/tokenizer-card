@@ -8,4 +8,14 @@ Feature: API /data-card/get-data
 
     Examples:
         | peticion      | mensaje                          |
-        | requestOk2     | responseOk2                       |
+        | requestOk     | responseOk                       |
+
+  Scenario Outline: Obtener datos de tarjeta vencida
+    Given se envia el token y header necesario para la <peticion>
+    And cumple los requisitos
+    When se envía la petición al servicio
+    Then deberia validar la respuesta del API
+
+    Examples:
+        | peticion   |     
+        | requestOk  |

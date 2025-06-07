@@ -4,7 +4,7 @@ import { INestApplication } from '@nestjs/common';
 import { TokenizerController } from '../../../src/infrastructure/controllers/TokenizerController';
 import { mockSaveTokenRepository } from '../util/TestHelper';
 import { tokenizerRequest } from '../request/RegisterDataCardRequest';
-import { tokenizerResponse } from '../response/RegisterDataCardResponse';
+import { tokenizerResponse, tokenTestValue } from '../response/RegisterDataCardResponse';
 import * as utils from 'src/application/utils/TokenGenerator';
 
 const feature = loadFeature('test/features/RegisterDataCard.feature');
@@ -39,7 +39,7 @@ defineFeature(feature, (test) => {
         });
         and('cumple los requisitos', async() => {
             mockSaveTokenRepository(void 0);
-            jest.spyOn(utils, 'generateToken').mockResolvedValue('xIc8IQ7KPVHHpg1L');
+            jest.spyOn(utils, 'generateToken').mockResolvedValue(tokenTestValue);
 
         })
 
@@ -55,4 +55,5 @@ defineFeature(feature, (test) => {
             expect(response).toStrictEqual(tokenizerResponse[mensaje.trim()]);
         });
     });
+
 });

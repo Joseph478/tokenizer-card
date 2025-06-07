@@ -12,10 +12,10 @@
     "dev": "ts-node-dev --respawn -r tsconfig-paths/register src/infrastructure/bootstrap/App.ts",
     "start:prod": "node dist/infrastructure/bootstrap/App.js",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
-    "test": "jest",
+    "test": "jest --detectOpenHandles",
     "test:detail": "jest --verbose --bail --detectOpenHandles",
     "test:watch": "jest --watch",
-    "test:cov": "jest --coverage",
+    "test:cov": "jest --coverage --detectOpenHandles",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
@@ -53,5 +53,4 @@
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.1.3"
   }
-
 }

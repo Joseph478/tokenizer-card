@@ -2,6 +2,11 @@ import type { Config } from 'jest';
 
 const config: Config = {
     rootDir: '.',
+    collectCoverageFrom: [
+        'src/**/*.ts',
+        '!src/**/infrastructure/repository/*',
+        '!src/**/infrastructure/repository/**/*'
+    ],
     moduleFileExtensions: ['js', 'json', 'ts'],
     testMatch: [
         '**/*.test.ts',
@@ -11,7 +16,6 @@ const config: Config = {
     transform: {
         '^.+\\.(t|j)s$': 'ts-jest',
     },
-    collectCoverageFrom: ['src/**/*.(t|j)s'],
     coverageDirectory: './coverage',
     testEnvironment: 'node',
     moduleNameMapper: {
